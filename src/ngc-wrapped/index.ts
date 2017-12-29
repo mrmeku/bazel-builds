@@ -175,7 +175,8 @@ export function compile({allowNonHermeticReads, allDepsCompiledWithBazel = true,
         ngHost.amdModuleName) {
       return ngHost.amdModuleName({ fileName: importedFilePath } as ts.SourceFile);
     }
-    return relativeToRootDirs(importedFilePath, compilerOpts.rootDirs).replace(EXT, '');
+    let workspaceName: string = bazelOpts.workspaceName.replace('node_modules/', '');
+    return `${workspaceName}/${relativeToRootDirs(importedFilePath, compilerOpts.rootDirs).replace(EXT, '')}`;
   };
   ngHost.toSummaryFileName = (fileName: string, referringSrcFileName: string) =>
       relativeToRootDirs(fileName, compilerOpts.rootDirs).replace(EXT, '');
